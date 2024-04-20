@@ -1,6 +1,6 @@
 import { SafeAreaView, Text, View } from 'react-native'
 import React, { Component, useEffect } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DarkTheme, DefaultTheme  } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import HomeScreen from './index.jsx'
 import { SplashScreen } from 'expo-router'
@@ -8,16 +8,11 @@ import { useFonts } from 'expo-font'
 import { StatusBar } from 'expo-status-bar'
 import Signup from './signup.jsx'
 import Signin from './signin.jsx'
+import { Appearance } from 'react-native'
 
 SplashScreen.preventAutoHideAsync();
 
 const stack = createNativeStackNavigator();
-
-const setStatusBarWhite = () => {
-    return (
-        <StatusBar style="light" />
-    )
-}
 
 const RootComponent = () => {
     const [fontsLoaded, fontError] = useFonts({
@@ -30,7 +25,9 @@ const RootComponent = () => {
             "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
             "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
             "Inter-Thin": require("../assets/fonts/Inter-Thin.ttf"),
-    })
+    });
+
+    
 
     useEffect(() => {
         if (fontError) throw fontError;
@@ -44,7 +41,10 @@ const RootComponent = () => {
     
 
     return (
-        <>
+        <NavigationContainer
+            independent
+            theme={DarkTheme}
+        >
             <stack.Navigator
                 screenOptions={{ headerShown: false }}
             >
@@ -52,7 +52,7 @@ const RootComponent = () => {
                 <stack.Screen name="signup" component={Signup} />
                 <stack.Screen name="signin" component={Signin} />
             </stack.Navigator>
-        </>
+        </NavigationContainer>
     )
 }
 

@@ -18,7 +18,7 @@ const HomeScreen = () => {
         paddingLeft: insets.left,
         paddingRight: insets.right,
       }}
-        className="bg-[#181414]"
+        className="bg-background"
       >
         <StatusBar barStyle="light-content" backgroundColor="#181414" />
         <View className="items-center mt-[25%]">

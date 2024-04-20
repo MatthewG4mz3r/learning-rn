@@ -26,7 +26,6 @@ const Signup = () => {
     >
       <ScrollView className="bg-background">
         <View className="mt-[5%]">
-          <StatusBar style="light" backgroundColor="#181414" />
           <Image 
             source={require("../assets/icons/logo.png")}
             className="w-[145px] h-[145px]"
