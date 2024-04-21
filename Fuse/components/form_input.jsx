@@ -27,7 +27,9 @@ const FormInput = ({ fieldName, onChange, extraStyle, value, password }) => {
               />
             </TouchableOpacity>
             </View>
-          ) : console.log()}
+          ) : (
+            <></>
+          )}
        </View>
     </View>
   )

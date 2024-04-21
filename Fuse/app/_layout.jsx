@@ -9,6 +9,8 @@ import { StatusBar } from 'expo-status-bar'
 import Signup from './signup.jsx'
 import Signin from './signin.jsx'
 import { Appearance } from 'react-native'
+import AllChats from './(view_chats)/all_chats.jsx'
+import { AuthContextProvider } from '../tools/context/auth_context.js'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,18 +43,28 @@ const RootComponent = () => {
     
 
     return (
-        <NavigationContainer
-            independent
-            theme={DarkTheme}
-        >
-            <stack.Navigator
-                screenOptions={{ headerShown: false }}
+        <AuthContextProvider>
+            <NavigationContainer
+                independent
+                theme={DarkTheme}
             >
-                <stack.Screen name="index" component={HomeScreen} />
-                <stack.Screen name="signup" component={Signup} />
-                <stack.Screen name="signin" component={Signin} />
-            </stack.Navigator>
-        </NavigationContainer>
+                <stack.Navigator>
+                    <stack.Group
+                        screenOptions={{ headerShown: false }}
+                    >
+                        <stack.Screen name="index" component={HomeScreen} />
+                        <stack.Screen name="signup" component={Signup} />
+                        <stack.Screen name="signin" component={Signin} />
+                    </stack.Group>
+
+                    <stack.Group
+                        screenOptions={{ title: "Fuse" }}
+                    >
+                        <stack.Screen name="all_chats" component={AllChats} />
+                    </stack.Group>
+                </stack.Navigator>
+            </NavigationContainer>
+        </AuthContextProvider>
     )
 }
 

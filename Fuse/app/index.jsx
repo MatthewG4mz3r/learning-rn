@@ -4,6 +4,7 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import Button from '../components/button';
 import {insets} from '../tools/constants'
 import {useNavigation} from '@react-navigation/native'
+import { signinUser } from '../firebaseConfig';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();

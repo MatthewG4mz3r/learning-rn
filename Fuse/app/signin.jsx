@@ -5,13 +5,25 @@ import { StatusBar } from 'expo-status-bar';
 import FormInput from '../components/form_input';
 import Button from '../components/button';
 import Link from '../components/link';
+import { signinUser } from '../firebaseConfig';
+import { useNavigation } from '@react-navigation/native'
 
 const Signin = () => {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const [ form, setForm ] = useState({
     email: "",
     password: "",
   });
+
+  const onSignin = () => {
+    const result = signinUser(form.email, form.password);
+
+    if (result == 0) {
+      navigation.navigate("all_chats");
+      storeUserState();
+    }
+  }
 
   return (
     <SafeAreaProvider
@@ -25,7 +37,7 @@ const Signin = () => {
     >
       <ScrollView className="bg-background">
         <View className="mt-[20%]">
-          <StatusBar style="light" backgroundColor="#181414" />
+          <StatusBar style="light" />
           <Image 
             source={require("../assets/icons/logo.png")}
             className="w-[145px] h-[145px]"
@@ -51,7 +63,7 @@ const Signin = () => {
               <Button 
                 additionalStyles="mt-10 w-[87%] h-[78px]"
                 title="Sign In"
-                clickHandler={() => {}}
+                clickHandler={() => onSignin()}
                 password={true}
               />
           </View>

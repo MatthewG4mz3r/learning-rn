@@ -1,18 +1,40 @@
-import { View, Text, ScrollView, Image, TextInput } from 'react-native'
+import { View, Text, ScrollView, Image, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar';
 import FormInput from '../components/form_input';
 import Button from '../components/button';
 import Link from '../components/link';
+import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
+import { UserAuth } from '../tools/context/auth_context';
+import {useNavigation} from '@react-navigation/native'
+import { auth } from '../firebaseConfig'
 
 const Signup = () => {
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const [ form, setForm ] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+
+  const { createUser, updateUsername } = UserAuth();
+
+  const onSignup = async () => {
+    setError("");
+    try {
+      await createUser(form.email, form.password, form.name);
+      await updateUsername(form.name);
+
+      navigation.navigate("all_chats");
+    } catch (error) {
+      setError(error.message);
+    }
+
+    if (error) console.log(error);
+  }
 
   return (
     <SafeAreaProvider
@@ -60,7 +82,9 @@ const Signup = () => {
               <Button 
                 additionalStyles="mt-10 w-[87%] h-[78px]"
                 title="Sign Up"
-                clickHandler={() => {}}
+                clickHandler={() => {
+                  onSignup();
+                }}
                 password={true}
               />
           </View>
